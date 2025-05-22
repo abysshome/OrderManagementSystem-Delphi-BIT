@@ -1,0 +1,425 @@
+object cookForm: TcookForm
+  Left = 441
+  Top = 269
+  Width = 1040
+  Height = 580
+  Caption = #39184#21381#30028#38754
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = False
+  OnActivate = cookFormOnActivate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object PageControl1: TPageControl
+    Left = 0
+    Top = 24
+    Width = 1017
+    Height = 489
+    ActivePage = TabSheet1
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = #26999#20307
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 0
+    OnChange = PageControl1Change
+    object TabSheet1: TTabSheet
+      Caption = #24453#20986#39184#35746#21333
+      object Label1: TLabel
+        Left = 40
+        Top = 16
+        Width = 80
+        Height = 20
+        Caption = #35746#21333#21015#34920
+      end
+      object Label2: TLabel
+        Left = 488
+        Top = 24
+        Width = 180
+        Height = 20
+        Caption = #36755#20837#35201#20462#25913#30340#35746#21333#21495
+      end
+      object Label8: TLabel
+        Left = 488
+        Top = 232
+        Width = 120
+        Height = 20
+        Caption = #36873#25321#20320#30340#25805#20316
+      end
+      object DBGrid1: TDBGrid
+        Left = 24
+        Top = 56
+        Width = 441
+        Height = 337
+        DataSource = DataSource1
+        TabOrder = 0
+        TitleFont.Charset = DEFAULT_CHARSET
+        TitleFont.Color = clWindowText
+        TitleFont.Height = -20
+        TitleFont.Name = #26999#20307
+        TitleFont.Style = []
+      end
+      object Edit1: TEdit
+        Left = 488
+        Top = 64
+        Width = 369
+        Height = 28
+        TabOrder = 1
+        Text = 'order_id'
+        OnClick = Edit1Click
+      end
+      object Button1: TButton
+        Left = 488
+        Top = 304
+        Width = 81
+        Height = 33
+        Caption = #25509#21333
+        TabOrder = 2
+        OnClick = Button1Click
+      end
+      object Button2: TButton
+        Left = 624
+        Top = 304
+        Width = 81
+        Height = 33
+        Caption = #25298#21333
+        TabOrder = 3
+        OnClick = Button2Click
+      end
+      object Button3: TButton
+        Left = 760
+        Top = 304
+        Width = 81
+        Height = 33
+        Caption = #20986#39184
+        TabOrder = 4
+        OnClick = Button3Click
+      end
+      object DBNavigator1: TDBNavigator
+        Left = 24
+        Top = 408
+        Width = 430
+        Height = 25
+        DataSource = DataSource1
+        TabOrder = 5
+      end
+    end
+    object TabSheet2: TTabSheet
+      Caption = #20462#25913#33756#21333
+      ImageIndex = 1
+      object Label3: TLabel
+        Left = 40
+        Top = 16
+        Width = 80
+        Height = 20
+        Caption = #33756#21333#21015#34920
+      end
+      object Label4: TLabel
+        Left = 488
+        Top = 24
+        Width = 180
+        Height = 20
+        Caption = #36755#20837#35201#21024#38500#30340#33756#21333#21495
+      end
+      object Label5: TLabel
+        Left = 120
+        Top = 96
+        Width = 80
+        Height = 20
+        Caption = #35746#21333#21015#34920
+      end
+      object DBGrid2: TDBGrid
+        Left = 32
+        Top = 56
+        Width = 441
+        Height = 337
+        DataSource = DataSource1
+        TabOrder = 0
+        TitleFont.Charset = DEFAULT_CHARSET
+        TitleFont.Color = clWindowText
+        TitleFont.Height = -20
+        TitleFont.Name = #26999#20307
+        TitleFont.Style = []
+      end
+      object menuDeleteEdit: TEdit
+        Left = 488
+        Top = 64
+        Width = 249
+        Height = 28
+        TabOrder = 1
+        Text = 'order_id'
+        OnClick = menuDeleteEditClick
+      end
+      object menuDeleteButton: TButton
+        Left = 792
+        Top = 64
+        Width = 97
+        Height = 41
+        Caption = #21024#38500
+        TabOrder = 2
+        OnClick = menuDeleteButtonClick
+      end
+      object Panel1: TPanel
+        Left = 480
+        Top = 128
+        Width = 481
+        Height = 313
+        TabOrder = 3
+        object Label9: TLabel
+          Left = 1
+          Top = 8
+          Width = 80
+          Height = 20
+          Caption = #28155#21152#33756#21333
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clMaroon
+          Font.Height = -20
+          Font.Name = #26999#20307
+          Font.Style = []
+          ParentFont = False
+        end
+        object Label12: TLabel
+          Left = 33
+          Top = 56
+          Width = 40
+          Height = 20
+          Caption = #33756#21517
+        end
+        object Label13: TLabel
+          Left = 33
+          Top = 101
+          Width = 40
+          Height = 20
+          Caption = #25551#36848
+        end
+        object Label14: TLabel
+          Left = 33
+          Top = 149
+          Width = 40
+          Height = 20
+          Caption = #20215#26684
+        end
+        object Label15: TLabel
+          Left = 33
+          Top = 197
+          Width = 40
+          Height = 20
+          Caption = #21697#31867
+        end
+        object categoryEdit: TEdit
+          Left = 176
+          Top = 192
+          Width = 249
+          Height = 28
+          TabOrder = 0
+          Text = 'category'
+          OnClick = menuDeleteEditClick
+        end
+        object descEdit: TEdit
+          Left = 176
+          Top = 96
+          Width = 249
+          Height = 28
+          TabOrder = 1
+          Text = 'desc'
+          OnClick = menuDeleteEditClick
+        end
+        object nameEdit: TEdit
+          Left = 176
+          Top = 48
+          Width = 249
+          Height = 28
+          TabOrder = 2
+          Text = 'name'
+          OnClick = menuDeleteEditClick
+        end
+        object priceEdit: TEdit
+          Left = 176
+          Top = 144
+          Width = 249
+          Height = 28
+          TabOrder = 3
+          Text = 'price'
+          OnClick = menuDeleteEditClick
+        end
+        object menuAddButton: TButton
+          Left = 72
+          Top = 248
+          Width = 201
+          Height = 41
+          Caption = #28857#20987#28155#21152
+          TabOrder = 4
+          OnClick = menuAddButtonClick
+        end
+      end
+      object DBNavigator2: TDBNavigator
+        Left = 40
+        Top = 408
+        Width = 430
+        Height = 25
+        DataSource = DataSource1
+        TabOrder = 4
+      end
+    end
+    object TabSheet3: TTabSheet
+      Caption = #35746#21333#35760#24405
+      ImageIndex = 2
+      object Label10: TLabel
+        Left = 40
+        Top = 16
+        Width = 80
+        Height = 20
+        Caption = #35746#21333#21015#34920
+      end
+      object Label11: TLabel
+        Left = 496
+        Top = 24
+        Width = 180
+        Height = 20
+        Caption = #36755#20837#35201#21024#38500#30340#35746#21333#21495
+      end
+      object Button4: TButton
+        Left = 512
+        Top = 152
+        Width = 225
+        Height = 33
+        Caption = #21024#38500#35746#21333#35760#24405
+        TabOrder = 0
+        OnClick = Button4Click
+      end
+      object Edit3: TEdit
+        Left = 488
+        Top = 64
+        Width = 369
+        Height = 28
+        TabOrder = 1
+        Text = 'order_id'
+        OnClick = Edit3Click
+      end
+      object DBGrid3: TDBGrid
+        Left = 32
+        Top = 56
+        Width = 441
+        Height = 337
+        DataSource = DataSource1
+        TabOrder = 2
+        TitleFont.Charset = DEFAULT_CHARSET
+        TitleFont.Color = clWindowText
+        TitleFont.Height = -20
+        TitleFont.Name = #26999#20307
+        TitleFont.Style = []
+      end
+      object DBNavigator3: TDBNavigator
+        Left = 40
+        Top = 408
+        Width = 430
+        Height = 25
+        DataSource = DataSource1
+        TabOrder = 3
+      end
+    end
+    object TabSheet4: TTabSheet
+      Caption = #39184#21381#20449#24687
+      ImageIndex = 3
+      object Label16: TLabel
+        Left = 40
+        Top = 32
+        Width = 80
+        Height = 20
+        Caption = #39184#21381#21517#31216
+      end
+      object Label17: TLabel
+        Left = 40
+        Top = 112
+        Width = 80
+        Height = 20
+        Caption = #39184#21381#22320#22336
+      end
+      object Label18: TLabel
+        Left = 40
+        Top = 200
+        Width = 80
+        Height = 20
+        Caption = #32852#31995#26041#24335
+      end
+      object Label19: TLabel
+        Left = 40
+        Top = 280
+        Width = 80
+        Height = 20
+        Caption = #20027#35201#33756#31995
+      end
+      object infoNameEdit: TEdit
+        Left = 160
+        Top = 24
+        Width = 281
+        Height = 28
+        TabOrder = 0
+      end
+      object infoAddressEdit: TEdit
+        Left = 160
+        Top = 104
+        Width = 281
+        Height = 28
+        TabOrder = 1
+        Text = ' '
+      end
+      object infoPhoneEdit: TEdit
+        Left = 160
+        Top = 192
+        Width = 281
+        Height = 28
+        TabOrder = 2
+        Text = ' '
+      end
+      object infoCuisineEdit: TEdit
+        Left = 160
+        Top = 280
+        Width = 281
+        Height = 28
+        TabOrder = 3
+        Text = ' '
+      end
+      object Button5: TButton
+        Left = 80
+        Top = 352
+        Width = 321
+        Height = 65
+        Caption = #20445#23384#20449#24687
+        TabOrder = 4
+        OnClick = Button5Click
+      end
+    end
+  end
+  object Button6: TButton
+    Left = 912
+    Top = 8
+    Width = 97
+    Height = 41
+    Caption = #36864#20986#30331#24405
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -17
+    Font.Name = #26999#20307
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 1
+    OnClick = Button6Click
+  end
+  object ADOQuery1: TADOQuery
+    Connection = mainForm.ADOConnection1
+    Parameters = <>
+    Left = 424
+    Top = 8
+  end
+  object DataSource1: TDataSource
+    DataSet = ADOQuery1
+    Left = 464
+    Top = 8
+  end
+end

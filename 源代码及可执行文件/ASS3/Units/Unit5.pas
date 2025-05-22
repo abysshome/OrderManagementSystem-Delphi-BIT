@@ -1,0 +1,172 @@
+unit Unit5;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, DB, ADODB, ComCtrls, StdCtrls, Grids, DBGrids;
+
+type
+  TriderForm = class(TForm)
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
+    TabSheet3: TTabSheet;
+    ADOQuery1: TADOQuery;
+    Button1: TButton;
+    DataSource1: TDataSource;
+    DBGrid1: TDBGrid;
+    Label1: TLabel;
+    Label2: TLabel;
+    DBGrid2: TDBGrid;
+    Button3: TButton;
+    Label3: TLabel;
+    DBGrid3: TDBGrid;
+    Label4: TLabel;
+    Edit1: TEdit;
+    Label5: TLabel;
+    Edit2: TEdit;
+    Label6: TLabel;
+    Edit3: TEdit;
+    Button2: TButton;
+    TabSheet4: TTabSheet;
+    Label16: TLabel;
+    infoNameEdit: TEdit;
+    Label17: TLabel;
+    infoVehicleEdit: TEdit;
+    Label18: TLabel;
+    infoLicenseEdit: TEdit;
+    Label19: TLabel;
+    infoAvailableEdit: TEdit;
+    Button5: TButton;
+    ADOQuery2: TADOQuery;
+    Button4: TButton;
+    procedure riderFormOnActivate(Sender: TObject);
+    procedure PageControl1Change(Sender: TObject);
+    procedure edit1Click(Sender: TObject);
+    procedure edit2Click(Sender: TObject);
+    procedure edit3Click(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  riderForm: TriderForm;
+  query:String;
+
+implementation
+uses unit1,unit2;
+{$R *.dfm}
+
+procedure TriderForm.riderFormOnActivate(Sender: TObject);
+begin
+  PageControl1.ActivePageIndex:=0;
+  query:=Format('Select * From deliveries where delivery_status = ''pending''',[]);
+  ADOQuery1.SQL.Text:=query;
+  ADOQuery1.Open;
+end;
+
+procedure TriderForm.PageControl1Change(Sender: TObject);
+begin
+  case PageControl1.ActivePageIndex of
+    0:
+      begin
+      query:=Format('Select * From deliveries where delivery_status = ''pending''',[unit2.user_id]);
+      ADOQuery1.SQL.Text:=query;
+      ADOQuery1.Open;
+      end;
+    1:
+      begin
+      query:=Format('Select * From deliveries where delivery_status = ''in_transit''and rider_id=%d',[unit2.user_id]);
+      ADOQuery1.SQL.Text:=query;
+      ADOQuery1.Open;
+      end;
+    2:
+      begin
+      query:=Format('Select * From deliveries where delivery_status = ''delivered''and rider_id=%d',[unit2.user_id]);
+      ADOQuery1.SQL.Text:=query;
+      ADOQuery1.Open;
+      end;
+    3:
+      begin
+      infoNameEdit.Text:=unit2.username;
+      query:=Format('Select * From riders where id=%d',[unit2.user_id]);
+      ADOQuery1.SQL.Text:=query;
+      ADOQuery1.Open;
+      infoVehicleEdit.Text:=ADOQuery1.FieldByName('vehicle').AsString;
+      infoLicenseEdit.Text:=ADOQuery1.FieldByName('license').AsString;
+      infoAvailableEdit.Text:=ADOQuery1.FieldByName('available').AsString;
+      end;
+  end;
+end;
+
+procedure TriderForm.edit1Click(Sender: TObject);
+begin
+  edit1.Text:='';
+end;
+
+procedure TriderForm.edit2Click(Sender: TObject);
+begin
+  edit2.Text:='';
+end;
+
+procedure TriderForm.edit3Click(Sender: TObject);
+begin
+  edit3.Text:='';
+end;
+
+procedure TriderForm.Button5Click(Sender: TObject);
+begin
+  query:=Format('Update users set username=''%s'' where id=%d',[infoNameEdit.Text,unit2.user_id]);
+  ADOQuery1.SQL.Text:=query;
+  ADOQuery1.ExecSQL;
+  unit2.username:=infoNameEdit.Text;
+  query:=Format('Update riders set vehicle=''%s'',license=''%s'',available=''%s'' where id=%d',[infoVehicleEdit.Text,infoLicenseEdit.Text,infoAvailableEdit.Text,unit2.user_id]);
+  ADOQuery1.SQL.Text:=query;
+  ADOQuery1.ExecSQL;
+end;
+
+procedure TriderForm.Button1Click(Sender: TObject);
+begin
+  query:=Format('update deliveries set rider_id=%d , delivery_status=''in_transit'' where order_id=%d',[unit2.user_id,StrToInt(Edit1.Text)]);
+  ADOquery2.SQL.Text:=query;
+  ADOQuery2.ExecSQL;
+  query:=Format('Select * From deliveries where delivery_status = ''pending''',[unit2.user_id]);
+  ADOQuery1.SQL.Text:=query;
+  ADOQuery1.Open;
+end;
+
+procedure TriderForm.Button3Click(Sender: TObject);
+begin
+  query:=Format('update deliveries set delivery_status=''delivered'' where order_id=%d',[StrToInt(Edit2.Text)]);
+  ADOquery2.SQL.Text:=query;
+  ADOQuery2.ExecSQL;
+  query:=Format('Select * From deliveries where delivery_status = ''in_transit''and rider_id=%d',[unit2.user_id]);
+  ADOQuery1.SQL.Text:=query;
+  ADOQuery1.Open;
+end;
+
+procedure TriderForm.Button2Click(Sender: TObject);
+begin
+  query:=Format('delete from deliveries where order_id=%d',[StrToInt(edit3.Text)]);
+  ADOQuery2.SQL.Text:=query;
+  ADOQuery2.ExecSQL;
+  query:=Format('Select * From deliveries where delivery_status = ''delivered''and rider_id=%d',[unit2.user_id]);
+  ADOQuery1.SQL.Text:=query;
+  ADOQuery1.Open;
+end;
+
+procedure TriderForm.Button4Click(Sender: TObject);
+begin
+  riderForm.Hide;
+  mainForm.Show;
+end;
+
+end.

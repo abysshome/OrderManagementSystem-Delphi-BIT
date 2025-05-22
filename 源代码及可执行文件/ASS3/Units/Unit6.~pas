@@ -1,0 +1,210 @@
+unit Unit6;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Grids, DBGrids, DB, ADODB, StdCtrls, ComCtrls, ExtCtrls, DBCtrls;
+
+type
+  TcookForm = class(TForm)
+    ADOQuery1: TADOQuery;
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
+    TabSheet3: TTabSheet;
+    DataSource1: TDataSource;
+    DBGrid1: TDBGrid;
+    Label1: TLabel;
+    Label2: TLabel;
+    Edit1: TEdit;
+    Button1: TButton;
+    Button2: TButton;
+    Button3: TButton;
+    Label3: TLabel;
+    DBGrid2: TDBGrid;
+    Label4: TLabel;
+    menuDeleteEdit: TEdit;
+    Button4: TButton;
+    menuDeleteButton: TButton;
+    Label5: TLabel;
+    Label10: TLabel;
+    Label11: TLabel;
+    Label8: TLabel;
+    Edit3: TEdit;
+    Panel1: TPanel;
+    Label9: TLabel;
+    Label12: TLabel;
+    categoryEdit: TEdit;
+    Label13: TLabel;
+    descEdit: TEdit;
+    Label14: TLabel;
+    nameEdit: TEdit;
+    Label15: TLabel;
+    priceEdit: TEdit;
+    menuAddButton: TButton;
+    TabSheet4: TTabSheet;
+    DBGrid3: TDBGrid;
+    Label16: TLabel;
+    Label17: TLabel;
+    Label18: TLabel;
+    Label19: TLabel;
+    infoNameEdit: TEdit;
+    infoAddressEdit: TEdit;
+    infoPhoneEdit: TEdit;
+    infoCuisineEdit: TEdit;
+    Button5: TButton;
+    DBNavigator1: TDBNavigator;
+    DBNavigator2: TDBNavigator;
+    DBNavigator3: TDBNavigator;
+    procedure PageControl1Change(Sender: TObject);
+    procedure cookFormOnActivate(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+    procedure Edit1Click(Sender: TObject);
+    procedure menuDeleteEditClick(Sender: TObject);
+    procedure Edit3Click(Sender: TObject);
+    procedure menuAddButtonClick(Sender: TObject);
+    procedure menuDeleteButtonClick(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  cookForm: TcookForm;
+  query:String;
+
+implementation
+uses unit1,unit2;
+{$R *.dfm}
+
+procedure TcookForm.PageControl1Change(Sender: TObject);
+begin
+  case PageControl1.ActivePageIndex of
+    0:
+      begin
+      query:=Format('Select * From orders where restaurant_id = %d and status !=''completed'' and status !=''delivering'' ',[unit2.user_id]);
+      ADOQuery1.SQL.Text:=query;
+      ADOQuery1.Open;
+      end;
+    1:
+      begin
+      query:=Format('Select * From menu_items where restaurant_id = %d',[unit2.user_id]);
+      ADOQuery1.SQL.Text:=query;
+      ADOQuery1.Open;
+      end;
+    2:
+      begin
+      query:=Format('Select * From orders where restaurant_id = %d',[unit2.user_id]);
+      ADOQuery1.SQL.Text:=query;
+      ADOQuery1.Open;
+      end;
+    3:
+      begin
+      query:=Format('Select * From restaurants where id=%d',[unit2.user_id]);
+      ADOQuery1.SQL.Text:=Query;
+      ADOQuery1.Open;
+      infoNameEdit.Text:=ADOQuery1.FieldByName('name').AsString;
+      infoAddressEdit.Text:=ADOQuery1.FieldByName('address').AsString;
+      infoPhoneEdit.Text:=ADOQuery1.FieldByName('phone').AsString;
+      infoCuisineEdit.Text:=ADOQuery1.FieldByName('cuisine').AsString;
+      end;
+  end;
+end;
+
+procedure TcookForm.cookFormOnActivate(Sender: TObject);
+begin
+  PageControl1.ActivePageIndex:=0;
+  query:=Format('Select * From orders where restaurant_id = %d and status !=''completed''and status !=''delivering'' ',[unit2.user_id]);
+  ADOQuery1.SQL.Text:=query;
+  ADOQuery1.Open;
+end;
+
+procedure TcookForm.Button1Click(Sender: TObject);
+begin
+  query:=Format('update orders set status = ''preparing'' where id= %d',[StrToInt(edit1.Text)]);
+  ADOQuery1.SQL.Text:=query;
+  ADOQuery1.ExecSQL;
+  query:=Format('Select * From orders where restaurant_id = %d and status !=''completed'' ',[unit2.user_id]);
+  ADOQuery1.SQL.Text:=query;
+  ADOQuery1.Open;
+end;
+
+procedure TcookForm.Button3Click(Sender: TObject);
+begin
+  query:=Format('update orders set status = ''delivering'' where id= %d',[StrToInt(edit1.Text)]);
+  ADOQuery1.SQL.Text:=query;
+  ADOQuery1.ExecSQL;
+  query:=Format('Select * From orders where restaurant_id = %d and status !=''completed'' ',[unit2.user_id]);
+  ADOQuery1.SQL.Text:=query;
+  ADOQuery1.Open;
+end;
+
+procedure TcookForm.Edit1Click(Sender: TObject);
+begin
+  Edit1.Text:='';
+end;
+
+procedure TcookForm.menuDeleteEditClick(Sender: TObject);
+begin
+  menuDeleteEdit.Text:='';
+end;
+
+procedure TcookForm.Edit3Click(Sender: TObject);
+begin
+  Edit3.Text:='';
+end;
+
+procedure TcookForm.menuAddButtonClick(Sender: TObject);
+begin
+  query:=Format('insert into menu_items (restaurant_id, name, description, price, category) values (%d,''%s'',''%s'',%f,''%s'')',[unit2.user_id,nameEdit.Text,descEdit.Text,StrToFloat(priceEdit.Text),categoryEdit.Text]);
+  ADOQuery1.SQL.Text:=query;
+  ADOQuery1.ExecSQL;
+  query:=Format('Select * From menu_items where restaurant_id = %d',[unit2.user_id]);
+  ADOQuery1.SQL.Text:=query;
+  ADOQuery1.Open;
+end;
+
+procedure TcookForm.menuDeleteButtonClick(Sender: TObject);
+begin
+  query:=Format('Delete From menu_items where id=%d ',[StrToInt(menuDeleteEdit.Text)]);
+  ADOQuery1.SQL.Text:=query;
+  ADOQuery1.ExecSQL;
+  query:=Format('Select * From menu_items where restaurant_id = %d',[unit2.user_id]);
+  ADOQuery1.SQL.Text:=query;
+  ADOQuery1.Open;
+end;
+
+procedure TcookForm.Button2Click(Sender: TObject);
+begin
+  query:=Format('update orders set status = ''cancelled'' where id= %d',[StrToInt(edit1.Text)]);
+  ADOQuery1.SQL.Text:=query;
+  ADOQuery1.ExecSQL;
+  query:=Format('Select * From orders where restaurant_id = %d and status !=''completed'' ',[unit2.user_id]);
+  ADOQuery1.SQL.Text:=query;
+  ADOQuery1.Open;
+end;
+
+procedure TcookForm.Button4Click(Sender: TObject);
+begin
+  query:=Format('delete From orders where id= %d',[StrToInt(edit3.Text)]);
+  ADOQuery1.SQL.Text:=query;
+  ADOQuery1.ExecSQL;
+  query:=Format('Select * From orders where restaurant_id = %d',[unit2.user_id]);
+  ADOQuery1.SQL.Text:=query;
+  ADOQuery1.Open;
+end;
+
+procedure TcookForm.Button5Click(Sender: TObject);
+begin
+   query:=Format('Update restaurants set name=''%s'',address=''%s'',phone=''%s'',cuisine=''%s'' where id=%d',[infoNameEdit.Text,infoAddressEdit.Text,infoPhoneEdit.Text,infoCuisineEdit.Text,unit2.user_id]);
+   ADOQuery1.SQL.Text:=query;
+   ADOQUery1.ExecSQL;
+end;
+
+end.

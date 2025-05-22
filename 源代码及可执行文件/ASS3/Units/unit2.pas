@@ -1,0 +1,116 @@
+unit unit2;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ExtCtrls, jpeg,ADODB,DB, Grids, DBGrids;
+
+type
+  TloginForm = class(TForm)
+    Image1: TImage;
+    Label1: TLabel;
+    Panel1: TPanel;
+    Label2: TLabel;
+    Button1: TButton;
+    Label3: TLabel;
+    Edit1: TEdit;
+    Edit2: TEdit;
+    Button2: TButton;
+    ADOQuery1: TADOQuery;
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  loginForm: TloginForm;
+  user_id:integer;
+  username:string;
+  password:string;
+  query:String;
+
+implementation
+uses Unit1, Unit4, Unit3, Unit5, Unit6, Unit7;
+{$R *.dfm}
+
+procedure TloginForm.Button1Click(Sender: TObject);
+begin
+  case unit1.userClass of
+    0:
+      begin
+      query:=Format('SELECT id FROM users WHERE username = ''%s'' AND password = ''%s'' and type=''customer''',[Edit1.Text,Edit2.Text]);
+      ADOQuery1.SQL.Text:=query;
+      ADOQuery1.Open;
+      end;
+    1:
+      begin
+      query:=Format('SELECT id FROM users WHERE username = ''%s'' AND password = ''%s'' and type=''restaurant''',[Edit1.Text,Edit2.Text]);
+      ADOQuery1.SQL.Text:=query;
+      ADOQuery1.Open;
+      end;
+    2:
+      begin
+      query:=Format('SELECT id FROM users WHERE username = ''%s'' AND password = ''%s'' and type=''rider''',[Edit1.Text,Edit2.Text]);
+      ADOQuery1.SQL.Text:=query;
+      ADOQuery1.Open;
+      end;
+    3:
+      begin
+      query:=Format('SELECT id FROM users WHERE username = ''%s'' AND password = ''%s'' and type=''admin''',[Edit1.Text,Edit2.Text]);
+      ADOQuery1.SQL.Text:=query;
+      ADOQuery1.Open;
+      end;
+  end;
+
+  // 获取查询结果
+  if not ADOQuery1.Eof then
+      begin
+        user_id:=ADOQuery1.FieldByName('id').AsInteger;
+        username:=Edit1.Text;
+        showMessage('登陆成功');
+        loginForm.Hide;
+        case unit1.userClass of
+          0:
+            begin
+            if customerForm.Visible then
+              customerForm.hide;
+            customerForm.Show;
+            end;
+          1:
+          begin
+            if cookForm.Visible then
+              cookForm.hide;
+            cookForm.Show;
+            end;
+          2:
+          begin
+            if riderForm.Visible then
+              riderForm.hide;
+            riderForm.Show;
+            end;
+          3:
+          begin
+            if adminForm.Visible then
+              adminForm.hide;
+            adminForm.Show;
+            end;
+        end;
+      end
+  else
+      showMessage('用户名或密码错误');
+end;
+
+procedure TloginForm.Button2Click(Sender: TObject);
+begin
+  loginForm.Hide;
+  if registerForm.Visible then
+    registerForm.Show
+  else
+    registerForm.showModal;
+end;
+
+end.
